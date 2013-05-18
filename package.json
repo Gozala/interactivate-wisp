@@ -10,7 +10,7 @@
     "start": "node ./node_modules/browserify/bin/cmd.js --exports require --watch --debug --entry ./main.js --outfile ./build/main.js"
   },
   "devDependencies": {
-    "browserify": "~1.x.0"
+    "browserify": "~2.14.1"
   },
   "dependencies": {
     "interactivate": "~0.x.x",
