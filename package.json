@@ -1,21 +1,22 @@
 {
-  "name": "interactivate-template",
-  "id": "interactivate-template",
+  "name": "interactivate-wisp",
+  "id": "interactivate-wisp",
   "version": "0.0.1",
-  "description": "Template for embedding interactive & codemirror",
+  "description": "Interactivate for wisp",
   "author": "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)",
-  "homepage": "https://github.com/Gozala/interactivate-template",
+  "homepage": "https://github.com/Gozala/interactivate-wisp",
   "main": "./main.js",
   "scripts": {
-    "start": "node ./node_modules/browserify/bin/cmd.js --exports require --watch --debug --entry ./main.js --outfile ./build/main.js"
+    "start": "./node_modules/makeitso/index.js --ignore build --ignore node_modules --ignore main.js --ignore host.js"
   },
   "devDependencies": {
-    "browserify": "~2.14.1"
+    "browserify": "~2.14.1",
+    "makeitso": "0.0.1"
   },
   "dependencies": {
+    "wisp": "~0.6.7",
     "interactivate": "~0.x.x",
     "codemirror-hashare": "~0.0.x",
-    "codemirror-activine": "~0.0.x",
     "codemirror-persist": "~0.0.x"
   }
 }
