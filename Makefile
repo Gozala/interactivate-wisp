@@ -19,10 +19,20 @@ clean:
 	rm *.js
 
 host:
-	cat ./host.wisp | $(WISP) > ./host.js
+	cat ./src/host.wisp | $(WISP) > ./host.js
 
 main:
-	cat ./main.wisp | $(WISP) > ./main.js
+	cat ./src/main.wisp | $(WISP) > ./main.js
 
 bundle:
-	$(BROWSERIFY) --debug --exports require --entry ./main.js > ./build/main.js
+	$(BROWSERIFY) --debug \
+                --require wisp/sequence \
+                --require wisp/string \
+                --require wisp/reader \
+                --require wisp/ast \
+                --require wisp/reader \
+                --require wisp/compiler \
+                --require wisp/runtime \
+                --require wisp/analyzer \
+                --exports require \
+                --entry ./main.js > ./build/main.js
