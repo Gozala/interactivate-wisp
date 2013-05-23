@@ -13,7 +13,14 @@
     </style>
   </head>
   <body>
-<script type=template/wisp id=intro>
+<script type=template/wisp id=intro>;; This is an interactivate, live-coding environment for wisp programing language.
+;; By default only evaluation results are printed, but in this case we'll enable
+;; compilation result printing to explain how wisp translates to JS.
+
+(set! **print-compiled** true)
+
+;; =>
+
 ;; # wisp
 
 ; Wisp is homoiconic JS dialect with a clojure syntax, s-expressions and
@@ -26,73 +33,103 @@
 ;;    not something can be defined. In fact it's just a shortcut for
 ;;    void(0) in JS.
 nil ;; => void(0)
+;; =>
+
 
 ;; 2. Booleans - Wisp booleans true / false are JS booleans
 
 true ;; => true
 
+;; =>
+
 ;; 3. Numbers - Wisp numbers are JS numbers
 1  ;; => 1
+;; =>
 
 ;; 4. Strings - Wisp strings are JS Strings
 "Hello world"
+;; =>
+
 ;;    Wisp strings can be multiline
 "Hello,
 My name is wisp!"
+;; =>
 
 ;; 5. Characters - Characters are sugar for JS single char strings
 \a  ;; => "a"
+;; =>
 
 ;; 6. Keywords - Keywords are symbolic identifiers that evaluate to
 ;;               themselves.
 :keyword  ;; => "keyword"
+;; =>
+
 ;;    Since in JS string constats fulfill this purpose of symbolic
 ;;    identifiers, keywords compile to equivalent JS strings.
-(window.addEventListener :load handler false)
+(window.addEventListener :click alert false)
+;; =>
+
 ;;    Keywords can be invoked as functions, that desugars to plain
 ;;    associated value access in JS
-(:bar foo) ;; => foo["bar"]
+(:bar foo) ;; => (foo || 0)["bar"]
+;; =>
 
 
 ;; 7. Vectors - Wisp vectors are JS arrays.
 [ 1 2 3 4 ]
+;; =>
+
 ;;    Note: Commas are white space & can be used if desired
 [ 1, 2, 3, 4]
+;; =>
 
 
 ;; 8. Maps - Maps are hash maps, plain JS objects. Note that unlike
 ;;    in clojure keys can not be of arbitary types.
-{ "foo" bar :beep-bop "bop" 1 2 }
+{ "foo" {} :beep-bop "bop" 1 2 }
+;; =>
+
 ;;    Commas are optional but can come handy for separating key value
 ;;    pairs.
 { a 1, b 2 }
-;; In a future JSONs syntax may be made compatible with map syntax.
+;; =>
 
 
 ;; 9. Lists - You can't have a lisp without lists! Wisp has lists too.
 ;;    Wisp is homoiconic and it's code is made up of lists representing
 ;;    expressions. The first item in the expression is a function, being
 ;;    invoked with rest items as arguments.
-(foo bar baz) ; => foo(bar, baz);
+(parseInt "ff" 16) ; => parseInt("ff" 16);
+;; =>
+
 
 ;; # Conventions
 ;; Wisp puts a lot of effort in making naming conventions transparent,
 ;; by encouraning lisp conventions and then translating them to equivalent
 ;; JS conventions:
 
-(dash-delimited)   ;; => dashDelimited
-(predicate?)       ;; => isPredicate
-(**privates**)     ;; => __privates__
-(list->vector)     ;; => listToVector
+(parse-int "fe" 16)   ;; dash-delimited -> dashDelimited
+;; =>
+
+(finite? 7)       ;; predicate? -> isPredicate
+;; =>
+
+**print-compiled**     ;; **privates** -> __privates__
+;; =>
+
+->string               ;; list->vector -> listToVector
+;; =>
+
 
 ;; As a side effect some names can be expressed in a few ways, although
 ;; it's considered to be an advantage.
 
-(parse-int x)
-(parseInt x)
+(parse-int 7)
+(parseInt 7)
 
-(array? x)
-(isArray x)
+(finite? 3)
+(isFinite 3)
+;; =>
 
 
 ;; # Special forms
@@ -382,9 +419,9 @@ foo
  (map get-input-text)
  (reduce render))
 </script>
-    <a href="https://github.com/gozala/interactivate">
+    <a href="https://github.com/gozala/wisp">
       <img style="z-index: 3; position: absolute; top: 0; right: 0; border: 0;"
-           src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"
+           src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
            alt="Fork me on GitHub"/>
     </a>
     <script src="./build/main.js"></script>
