@@ -14,7 +14,7 @@
     "makeitso": "0.0.1"
   },
   "dependencies": {
-    "wisp": "~0.6.7",
+    "wisp": "~0.8.0",
     "interactivate": "~0.x.x",
     "codemirror-hashare": "~0.0.x",
     "codemirror-persist": "~0.0.x"

@@ -1,8 +1,8 @@
 (ns interactivate-wisp.main
   (:require [interactivate :as interactivate]
             [codemirror-hashare :as hashare]
-            [codemirror-persist :as persist])
-  (:use [interactivate-wisp.host :only [start-host!]]))
+            [codemirror-persist :as persist]
+            [interactivate-wisp.host :refer [start-host!]]))
 
 
 ;; Install plugins

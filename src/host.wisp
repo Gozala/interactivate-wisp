@@ -1,11 +1,11 @@
 (ns interactivate-wisp.host
-  (:require [interactivate.render :as render])
-  (:use [wisp.reader :only [read*]]
-        [wisp.compiler :only [compile*]]
-        [wisp.sequence :only [first rest list]]
-        [wisp.ast :only [symbol pr-str]]
-        [wisp.runtime :only [subs]]
-        [util :only [inspect]]))
+  (:require [interactivate.render :as render]
+            [wisp.reader :refer [read*]]
+            [wisp.compiler :refer [compile*]]
+            [wisp.sequence :refer [first rest list]]
+            [wisp.ast :refer [symbol pr-str]]
+            [wisp.runtime :refer [subs]]
+            [util :refer [inspect]]))
 
 (defn **out** [])
 (set! (.-exports window) {})
