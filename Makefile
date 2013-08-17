@@ -34,5 +34,7 @@ bundle:
                 --require wisp/compiler \
                 --require wisp/runtime \
                 --require wisp/analyzer \
+                --require wisp/expander \
+                --require wisp/backend/escodegen/writer \
                 --exports require \
                 --entry ./main.js > ./build/main.js
