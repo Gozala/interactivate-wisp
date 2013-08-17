@@ -10,8 +10,6 @@
 (interactivate CodeMirror)
 
 ;; Install other plugins
-
-(hashare CodeMirror)
 (persist CodeMirror)
 
 ;; Start evaluation host
@@ -19,8 +17,7 @@
 (start-host!)
 
 (def editor (CodeMirror (.-body document)
-                        {;:hashare true
-                         :persist true
+                        {:persist true
                          :matchBrackets true
                          :electricChars true
                          :styleActiveLine true
@@ -32,6 +29,7 @@
 
                          :interactivate true
                          :interactiveSeparator #"(?m)^;; =>[^\n]*$"
+                         :interactiveSection ";; =>\n"
 
                          :extraKeys {:Tab :indentSelection}}))
 

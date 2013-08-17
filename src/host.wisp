@@ -1,8 +1,8 @@
 (ns interactivate-wisp.host
   (:require [interactivate.render :as render]
             [wisp.reader :refer [read*]]
-            [wisp.compiler :refer [compile*]]
-            [wisp.sequence :refer [first rest list]]
+            [wisp.compiler :refer [compile]]
+            [wisp.sequence :refer [first rest list conj]]
             [wisp.ast :refer [symbol pr-str]]
             [wisp.runtime :refer [subs]]
             [util :refer [inspect]]))
@@ -15,31 +15,9 @@
 (set! (.-Out window) **out**)
 (set! (.-**print-compiled** window) false)
 (set! (.-**print-read** window) false)
+(set! (.-**print-analyzed** window) false)
+(set! (.-**print-as-js** window) false)
 
-(defn EvaluationResult
-  [output]
-  (set! (.-value this) output)
-  this)
-
-(.define render EvaluationResult
-  (fn [result]
-    (let [output (.-value result)
-          view (.create-element document "pre")]
-      (set! (.-innerHTML view)
-            (or (:error output)
-                (str (if **print-read**
-                       (str "<h1>Read</h1>"
-                            "<div>"
-                            (inspect (:forms output))
-                            "</div>")
-                       "")
-                     (if **print-compiled**
-                       (str "<h3>Compiled JS</h3>"
-                            "<div>" (:js-code output) "</div>")
-                       "")
-                     "<h3>Eval result</h3>"
-                     "<div>" (:print output) "</div>")))
-      view)))
 
 (defn send
   [packet]
@@ -57,28 +35,37 @@
   (let [address (:to (:detail packet))
         input (:source (:detail packet))
         output (evaluate input)
-        result (EvaluationResult. output)]
+        result output]
     (set! (get **out** address) result)
     (send {:from address
-           :message result})))
+           :result result})))
 
 (defn evaluate
   [input]
-  (try (let [forms (read* input)
-             js-code (compile* forms)
-             prefix-code (if (identical? "var" (subs js-code 0 3))
-                           ""
-                           "_ = ")
-             js-normalized (str "try { "
-                                prefix-code
-                                js-code
-                                " } catch(e) { e }")
-             result (.eval window js-normalized)]
-         {:input input
-          :forms forms
-          :js-code js-code
-          :result result
-          :print (pr-str result)})
-    (catch error {:input input
-                  :error error})))
+  (let [result (compile input {:include-ast true
+                               :include-forms true})
 
+        js-code (:code result)
+        prefix-code (if (identical? "var" (subs js-code 0 3))
+                      ""
+                      "_ = ")
+        js-normalized (str "try { "
+                           ;prefix-code
+                           js-code
+                           " } catch(e) { e }")
+        output (if (not (:error result))
+                 (.eval window js-normalized))]
+         {:error (and (:error result) {:value (:error result)})
+          :read (if **print-read**
+                  {:title "Read" :value (:forms result)})
+          :ast (if **print-analyzed**
+                 {:title "Analyzed" :value (:ast result)})
+          :js-code (if **print-compiled**
+                     {:title "Compiled JS" :value js-code})
+          :result {:title (if (or **print-read**
+                                  **print-analyzed**
+                                  **print-compiled**)
+                            "Result")
+                   :value (if **print-as-js**
+                            output
+                            (pr-str output))}}))
