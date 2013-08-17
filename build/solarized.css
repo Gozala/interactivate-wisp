@@ -186,6 +186,7 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
 Active line. Negative margin compensates left padding of the text in the
 view-port
 */
+
 .cm-s-solarized.cm-s-dark .CodeMirror-activeline {
   background: rgba(255, 255, 255, 0.05);
 
