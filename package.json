@@ -1,7 +1,7 @@
 {
   "name": "interactivate-wisp",
   "id": "interactivate-wisp",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Interactivate for wisp",
   "author": "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)",
   "homepage": "https://github.com/Gozala/interactivate-wisp",
@@ -14,9 +14,9 @@
     "makeitso": "0.0.1"
   },
   "dependencies": {
-    "wisp": "~0.8.0",
-    "interactivate": "~0.x.x",
-    "codemirror-hashare": "~0.0.x",
-    "codemirror-persist": "~0.0.x"
+    "wisp": "0.9.0-alpha2",
+    "interactivate": "~0.4.x",
+    "codemirror-persist": "~0.0.x",
+    "browserify": "~2.22.0"
   }
 }
