@@ -17,6 +17,7 @@
     "wisp": "0.9.0-alpha2",
     "interactivate": "~0.4.x",
     "codemirror-persist": "~0.0.x",
+    "codemirror-hashare": "~0.0.x",
     "browserify": "~2.22.0"
   }
 }
